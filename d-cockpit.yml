@@ -1,0 +1,19 @@
+--- # Cockpit Setup
+- hosts: labs-d
+  become: yes
+  tasks:
+  - name: Installing cockpit tools
+    apt:
+      name:
+        - cockpit
+        - cockpit-dashboard
+      state: latest
+  - name: Installing Docker
+    apt:
+      name: cockpit-docker
+      state: latest
+  - name: Starting Service
+    service:
+      name: cockpit.socket
+      enabled: yes
+      state: restarted

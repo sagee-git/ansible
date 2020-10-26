@@ -1,0 +1,13 @@
+---
+- name: Configuring Git
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Installing Git
+      yum:
+        name: git
+        state: latest
+    - name: Pulling Git Repo
+      git:
+        repo: https://github.com/sagee-git/gallery.git
+        dest: /var/www/html/

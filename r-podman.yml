@@ -1,0 +1,15 @@
+--- # Install and configuring Cockpit
+- hosts: labs-r
+  become: yes
+  tasks:
+  - name: Installing Podman
+    dnf:
+      name:
+        - podman
+        - cockpit-podman
+      state: latest
+  - name: Starting Service
+    service:
+      name: cockpit.socket
+      enabled: yes
+      state: restarted

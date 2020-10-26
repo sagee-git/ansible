@@ -1,0 +1,19 @@
+--- # Install and configuring Cockpit
+- hosts: labs-r
+  become: yes
+  tasks:
+  - name: updating
+    dnf:
+      name: "*"
+      state: latest
+  - name: Installing Cockpit and Tools
+    dnf:
+      name:
+        - cockpit
+        - cockpit-dashboard
+      state: latest
+  - name: Starting Service
+    service:
+      name: cockpit.socket
+      enabled: yes
+      state: restarted

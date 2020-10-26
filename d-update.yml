@@ -1,0 +1,8 @@
+--- # Updating
+- hosts: labs-d
+  become: yes
+  tasks:
+  - name: Updating
+    apt:
+      name: "*"
+      state: latest
