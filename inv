@@ -1,8 +1,6 @@
 [servers]
-13.68.159.158
-52.255.171.170
-52.168.108.175
+
 
 [servers:vars]
-ansible_user=sage
-ansible_password=M@rines1234!@#$
+ansible_user=
+ansible_password=
