@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  vars_files:
+    - ~/ansible/vars/ext_vars.yml
+
+  tasks:
+  - name: This is {{ name }}
+    command: /bin/echo {{ name }}
+  - name: Testing others {{ passwd }}
+    command: /bin/echo "{{ passwd }}"
+  - name: Testing last var {{ rgname }}
+    command: "/bin/echo {{ rgname }}"

@@ -1,0 +1,66 @@
+- name: Create an Azure Linux VM
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ~/ansible/vars/ext_vars.yml
+  tasks:
+# # #   - name: Create resource group
+# # #     azure_rm_resourcegroup:
+# # #       name: "{{ rgname }}"
+# # #       location: eastus
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: "{{ rgname }}"
+      name: "{{ name }}-vnet1"
+      address_prefixes: "10.0.0.0/16"
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: "{{ rgname }}"
+      name: "{{ name }}-subnet2"
+      address_prefix: "10.0.1.0/24"
+      virtual_network: "{{ name }}-vnet1"
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: "{{ rgname }}"
+      allocation_method: Static
+      name: "{{ name }}-{{ vm }}-pip1"
+    register: output_ip_address
+  - name: Dump public IP for VM which will be created
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: "{{ rgname }}"
+      name: "{{ name }}-{{ vm }}-nsg1"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: "{{ rgname }}"
+      name: "{{ name }}-{{ vm }}-nic1"
+      virtual_network: "{{ name }}-vnet1"
+      subnet: "{{ name }}-subnet2"
+      public_ip_name: "{{ name }}-{{ vm }}-pip1"
+      security_group: "{{ name }}-{{ vm }}-nsg1"
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ rgname }}"
+      name: "{{ name }}-{{ vm }}"
+      vm_size: Standard_DS1_v2
+      admin_username: "{{ usernm }}"
+      ssh_password_enabled: true
+      admin_password: "{{ passwd }}"
+    #   ssh_public_keys:
+    #     - path: /home/sagee/.ssh/authorized_keys
+    #       key_data: <your-key-data>
+      network_interfaces: "{{ name }}-{{ vm }}-nic1"
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.5'
+        version: latest
