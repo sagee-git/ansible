@@ -1,6 +1,5 @@
-[servers]
-
-
-[servers:vars]
-ansible_user=
-ansible_password=
+[hosts]
+192.168.0.15
+[hosts:vars]
+ansible_user=sagee
+ansible_password=cs-28m@RINES1123
