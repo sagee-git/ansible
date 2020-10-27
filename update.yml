@@ -1,18 +1,18 @@
 ---
 - name: Adding Updates
-  hosts: servers
+  hosts: hosts
   become: yes
   tasks:
     - name: Updating
-      yum:
+      dnf:
         name: "*"
         state: latest
     - name: Updating
-      yum:
+      dnf:
         name: httpd
         state: latest
     - name: Starting Service
       service:
         name: httpd
-        enabled: yes
-        state: started
+        # enabled: yes
+        state: restarted

@@ -1,0 +1,7 @@
+#!/bin/bash
+read -p "Whats the reason for committing?
+" prompt
+
+git add .
+git commit -m "$prompt"
+git push origin main

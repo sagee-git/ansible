@@ -1,10 +1,10 @@
 ---
 - name: Configuring Git
-  hosts: servers
+  hosts: hosts
   become: yes
   tasks:
     - name: Installing Git
-      yum:
+      dnf:
         name: git
         state: latest
     - name: Pulling Git Repo
