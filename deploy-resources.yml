@@ -2,12 +2,12 @@
   hosts: localhost
   connection: local
   vars_files:
-    - ~/ansible/vars/ext_vars.yml
+    - ~/ansible/ext_vars.yml
   tasks:
-# # #   - name: Create resource group
-# # #     azure_rm_resourcegroup:
-# # #       name: "{{ rgname }}"
-# # #       location: eastus
+  - name: Create resource group
+    azure_rm_resourcegroup:
+      name: "{{ rgname }}"
+      location: eastus
   - name: Create virtual network
     azure_rm_virtualnetwork:
       resource_group: "{{ rgname }}"
