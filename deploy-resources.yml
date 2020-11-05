@@ -3,6 +3,7 @@
   connection: local
   vars_files:
     - ~/ansible/ext_vars.yml
+    - ~/ansible/vars.yml
   tasks:
   - name: Create resource group
     azure_rm_resourcegroup:
