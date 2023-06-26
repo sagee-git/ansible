@@ -2,4 +2,4 @@
 192.168.0.15
 [hosts:vars]
 ansible_user=sagee
-ansible_password=cs-28m@RINES1123
+ansible_password=
